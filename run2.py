@@ -4,15 +4,14 @@ from MSG import *
 
 Email='925884246@qq.com'
 password = 'Esperando-0259'
-feeds_list=['TD','MVT','VSTP','RTPPM']
-td_list=['All area','Derby']
+feeds_list=['VSTP']
+td_list=['All_Derby','Derby']
 rtppm_list = ['NationalPage_Sector','NationalPage_Operator','OOCPage','OperatorPage']
 mvt_list = ['"0001": "activation"',
             '"0002": "cancellation"',
             '"0003": "movement"'
             '"0004": "_unidentified"',
             '"0005": "reinstatement"',
-            '"0006": "origin change"',
             '"0007": "identity change"',
             '"0008": "_location change"'
             ]
@@ -33,7 +32,7 @@ for i in feeds_list:
     if i == 'TD':
         for j in td_list:
             area_id = j
-            if j == 'All':
+            if j == 'All_Derby':
                 _table_format = table_format['TD_All']
             else:
                 _table_format = table_format['TD']

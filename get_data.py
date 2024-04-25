@@ -29,8 +29,8 @@ class get_data(threading.Thread):
             connection = stomp.Connection([('localhost', 61613)], keepalive=True, heartbeats=(5000, 5000))
         else:
             connection = stomp.Connection([('datafeeds.networkrail.co.uk', 61618)], keepalive=True, heartbeats=(5000, 5000))
+            #connection = stomp.Connection([('publicdatafeeds.networkrail.co.uk', 61618)], keepalive=True,heartbeats=(5000, 5000))
         connection.set_listener('', self.listener(self.mts, connection, self.msg_print,self.sts))
-
         connect_headers = {
             "username": self.username,
             "passcode": self.password,
