@@ -5,4 +5,4 @@ PyQt5-sip==12.11.0
 pyqt5-tools==5.15.4.3.2
 psycopg2==2.9.3
 pytz==2022.1
-stomp==8.0.1
+stomp.py==8.0.1
