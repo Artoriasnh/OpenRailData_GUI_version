@@ -5,6 +5,22 @@ from MSG import *
 import os
 import signal
 from PyQt5.Qt import *
+import contextlib
+from datetime import datetime
+import logging
+
+class EmitStr(QObject):
+    textWrit = pyqtSignal(str)
+
+    def __init__(self, parent=None):
+        super(EmitStr, self).__init__(parent)
+
+    def write(self, text):
+        self.textWrit.emit(str(text))
+
+    def flush(self):
+        pass
+
 
 class Ui_Saving(object):
     def setupUi(self, Saving):
@@ -47,10 +63,30 @@ class Ui_Saving(object):
         self.password = password
 
 
+    # def click_success(self):
+    #     self.get_msg()
+    #     sys.stdout = EmitStr(textWrit=self.outputWrite)
+    #     sys.stderr = EmitStr(textWrit=self.outputWrite)
+
     def click_success(self):
-        self.get_msg()
-        sys.stdout = EmitStr(textWrit=self.outputWrite)
-        sys.stderr = EmitStr(textWrit=self.outputWrite)
+        # # self.get_msg()
+        # # self.emitter = EmitStr()
+        # # self.emitter.textWrit.connect(self.outputWrite)  #
+        # # print("This is a test message.", file=self.emitter)
+        # self.emitter = EmitStr()
+        # self.emitter.textWrit.connect(self.outputWrite)
+        #
+        # # 所有 get_msg() 中的 print() 都会显示在 QTextEdit 中
+        # with contextlib.redirect_stdout(self.emitter):
+        #     self.get_msg()
+
+        self.setup_logger()
+        self.start_log_monitor()
+
+        self.logger.info("Start clicked, begin fetching data...")
+
+        # 将 logger 传入 get_msg 或 TD_msg 类中以便记录日志
+        self.get_msg()  # 此处如果你还用的是 print，也可以不变，先把 logger 用于主流程
 
 
     def click_success2(self):
@@ -60,6 +96,46 @@ class Ui_Saving(object):
 
     def outputWrite(self, text):
         self.textEdit.append(text)
+
+    def setup_logger(self):  # ✅ 新加
+
+
+        now = datetime.now().strftime("%Y%m%d_%H%M%S")
+        self.log_path = f"Log_{now}.txt"
+        self.logger = logging.getLogger("AppLogger")
+        self.logger.setLevel(logging.INFO)
+
+        file_handler = logging.FileHandler(self.log_path, encoding='utf-8')
+        formatter = logging.Formatter('%(asctime)s - %(message)s')
+        file_handler.setFormatter(formatter)
+
+        if not self.logger.handlers:
+            self.logger.addHandler(file_handler)
+
+        self.logger.info("===== Log started =====")
+
+    def start_log_monitor(self):  # ✅ 新加
+        from PyQt5.QtCore import QTimer
+
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_log_view)
+        self.timer.start(1000)
+
+    def update_log_view(self):  # ✅ 新加
+        try:
+            with open(self.log_path, 'r', encoding='utf-8') as f:
+                lines = f.readlines()[-1000:]
+                self.textEdit.setPlainText(''.join(lines))
+                self.textEdit.verticalScrollBar().setValue(self.textEdit.verticalScrollBar().maximum())
+        except Exception as e:
+            print(f"读取日志失败: {e}")
+
+
+
+
+
+
+
 
 
     def get_msg(self):
@@ -82,7 +158,8 @@ class Ui_Saving(object):
                         sql_host=self.sql_info['sql_host'],
                         port=self.sql_info['port'],
                         table_format=_table_format,
-                        area_id=area_id
+                        area_id=area_id,
+                        output_writer=self.logger
                     )
                     TD_getdata = get_data(
                         mts=TD_mts,
@@ -111,7 +188,8 @@ class Ui_Saving(object):
                             sql_host=self.sql_info['sql_host'],
                             port=self.sql_info['port'],
                             table_format=table_format['MVT'][j[1:5]],
-                            MVT_type=j[1:5]
+                            MVT_type=j[1:5],
+                            output_writer=self.logger
                         )
                         MVT_getdata = get_data(
                             mts=MVT_mts,
@@ -136,6 +214,7 @@ class Ui_Saving(object):
                     sql_host=self.sql_info['sql_host'],
                     port=self.sql_info['port'],
                     table_format=table_format['VSTP'],
+                    output_writer=self.logger
                 )
                 VSTP_getdata = get_data(
                     mts=VSTP_mts,
@@ -161,6 +240,7 @@ class Ui_Saving(object):
                     port=self.sql_info['port'],
                     table_format=table_format['RTPPM'],
                     rtppm_list=self.rtppm_list,
+                    output_writer=self.logger
                 )
                 RTPPM_getdata = get_data(
                     mts=RTPPM_mts,
@@ -175,12 +255,7 @@ class Ui_Saving(object):
                 RTPPM_getdata.start()
 
 
-class EmitStr(QObject):
-    textWrit  = pyqtSignal(str)
-    def write(self, text):
-        self.textWrit.emit(str(text))
-    def flush(self):
-        pass
+
 
 
 if __name__ == "__main__":

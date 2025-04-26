@@ -6,6 +6,7 @@ from SOP_con.DY_SOP import DY_SOP
 from SOP_con.DY_state_container import DY_state_container
 from SOP_con.DY_address_update_state_container import DY_address_update_state_container
 import re
+import logging
 
 TIMEZONE_LONDON: timezone = timezone("Europe/London")
 state_container = DY_state_container
@@ -69,8 +70,9 @@ class msg_to_sql(object):
 
 class TD_msg(msg_to_sql):
     def __init__(self, schema_name, data_type, database_name, sql_username, sql_password, sql_host, port, table_format,
-                 area_id):
+                 area_id, output_writer=None):
         self.area_id = area_id
+        self.logger = output_writer or logging.getLogger("AppLogger")  # 添加这一行
         super().__init__(schema_name, data_type, database_name, sql_username, sql_password, sql_host, port,
                          table_format)
 
@@ -109,7 +111,7 @@ class TD_msg(msg_to_sql):
                 self.conn.rollback()
                 self.cur.execute("insert into {} ({}) VALUES{}".format(self.dbTable, col, val))
                 self.conn.commit()
-            print('TD_data saving to sql .........')
+            self.logger.info('TD_data saving to sql .........')
 
     def decode_S_class(self, address, data):
         NUM_OF_BITS = 8
@@ -159,7 +161,7 @@ class TD_msg(msg_to_sql):
                     from_berth = message.get("from", "")
                     to_berth = message.get("to", "")
                     uk_datetime = self.set_timestamp(int(message["time"]))
-                    print("{} [{}] {} {} {} -> {}".format(
+                    self.logger.info("{} [{}] {} {} {} -> {}".format(
                         uk_datetime.strftime("%Y-%m-%d %H:%M:%S"),
                         message_type, area_id, description, from_berth, to_berth, ))
 
@@ -169,7 +171,7 @@ class TD_msg(msg_to_sql):
                     address = message.get("address", "")
                     data = message.get("data", "")
                     uk_datetime = self.set_timestamp(int(message["time"]))
-                    print("{} [{}] {} {} {}".format(
+                    self.logger.info("{} [{}] {} {} {}".format(
                         uk_datetime.strftime("%Y-%m-%d %H:%M:%S"),
                         message_type, area_id, address, data, ))
 
@@ -178,7 +180,7 @@ class TD_msg(msg_to_sql):
                     report_time = message.get("report_time", "")
                     description = message.get("descr", "")
                     uk_datetime = self.set_timestamp(int(message["time"]))
-                    print("{} [{:2}] {} {} {}".format(
+                    self.logger.info("{} [{:2}] {} {} {}".format(
                         uk_datetime.strftime("%Y-%m-%d %H:%M:%S"),
                         message_type, area_id, description, report_time, ))
 
@@ -195,7 +197,7 @@ class TD_msg(msg_to_sql):
                     description = message.get("descr", "")
                     from_berth = message.get("from", "")
                     to_berth = message.get("to", "")
-                    print("{} [{}] {} {} {} -> {}".format(
+                    self.logger.info("{} [{}] {} {} {} -> {}".format(
                         uk_datetime.strftime("%Y-%m-%d %H:%M:%S"),
                         message_type, area_id, description, from_berth, to_berth, ))
 
@@ -209,13 +211,13 @@ class TD_msg(msg_to_sql):
                         address_update_state_container[str(address_dec)] = 1
                         self.update_container(s_msg, address_dec)
                         if len(set(list(address_update_state_container.values()))) == 1:
-                            print("Full initial state acquisition successful")
+                            self.logger.info("Full initial state acquisition successful")
                     else:
                         changed_msg = self.get_changed_msg(s_msg, address_dec)
                         self.update_container(s_msg, address_dec)
                         if changed_msg != []:
                             for j in changed_msg:
-                                print("{} [{}] {} {} {} {}".format(
+                                self.logger.info("{} [{}] {} {} {} {}".format(
                                     uk_datetime.strftime("%Y-%m-%d %H:%M:%S"),
                                     message_type, area_id, j[0], j[1], j[2]))
 
@@ -234,20 +236,20 @@ class TD_msg(msg_to_sql):
                             address_update_state_container[str(address_dec)] = 1
                             self.update_container(s_msg, address_dec)
                             if len(set(list(address_update_state_container.values()))) == 1:
-                                print("Full initial state acquisition successful")
+                                self.logger.info("Full initial state acquisition successful")
                         else:
                             changed_msg = self.get_changed_msg(s_msg, address_dec)
                             self.update_container(s_msg, address_dec)
                             if changed_msg != []:
                                 for j in changed_msg:
-                                    print("{} [{}] {} {} {} {}".format(
+                                    self.logger.info("{} [{}] {} {} {} {}".format(
                                         uk_datetime.strftime("%Y-%m-%d %H:%M:%S"),
                                         message_type, area_id, j[0], j[1], j[2]))
 
                 if message_type == TD['C_HEARTBEAT']:
                     report_time = message.get("report_time", "")
                     description = message.get("descr", "")
-                    print("{} [{:2}] {} {} {}".format(
+                    self.logger.info("{} [{:2}] {} {} {}".format(
                         uk_datetime.strftime("%Y-%m-%d %H:%M:%S"),
                         message_type, area_id, description, report_time, ))
 
@@ -314,7 +316,7 @@ class TD_msg(msg_to_sql):
                             address_update_state_container[str(address_dec)] = 1
                             self.update_container(s_msg, address_dec)
                             if len(set(list(address_update_state_container.values()))) == 1:
-                                print("Full initial state acquisition successful")
+                                self.logger.info("Full initial state acquisition successful")
                                 self.creat_insert_initial_state(self, state_container, message["time"])
                         else:
                             changed_msg = self.get_changed_msg(s_msg, address_dec)
@@ -322,7 +324,7 @@ class TD_msg(msg_to_sql):
                             if changed_msg != []:
                                 for j in changed_msg:
                                     if msg_print == True:
-                                        print("{} [{}] {} {} {} {}".format(
+                                        self.logger.info("{} [{}] {} {} {} {}".format(
                                             uk_datetime.strftime("%Y-%m-%d %H:%M:%S"),
                                             message_type, area_id, j[0], j[1], j[2]))
 
@@ -330,7 +332,7 @@ class TD_msg(msg_to_sql):
                                     self.conn.rollback()
                                     self.cur.execute("insert into {} ({}) VALUES{}".format(self.dbTable, col, val_s))
                                     self.conn.commit()
-                                    print('Derby_data saving to sql .........')
+                                    self.logger.info('Derby_data saving to sql .........')
 
                     # SH/SG
                     else:
@@ -345,7 +347,7 @@ class TD_msg(msg_to_sql):
                                 address_update_state_container[str(address_dec)] = 1
                                 self.update_container(s_msg, address_dec)
                                 if len(set(list(address_update_state_container.values()))) == 1:
-                                    print("Full initial state acquisition successful")
+                                    self.logger.info("Full initial state acquisition successful")
                                     self.creat_insert_initial_state(self, state_container, message["time"])
                             else:
                                 changed_msg = self.get_changed_msg(s_msg, address_dec)
@@ -353,7 +355,7 @@ class TD_msg(msg_to_sql):
                                 if changed_msg != []:
                                     for j in changed_msg:
                                         if msg_print == True:
-                                            print("{} [{}] {} {} {} {}".format(
+                                            self.logger.info("{} [{}] {} {} {} {}".format(
                                                 uk_datetime.strftime("%Y-%m-%d %H:%M:%S"),
                                                 message_type, area_id, j[0], j[1], j[2]))
 
@@ -362,13 +364,13 @@ class TD_msg(msg_to_sql):
                                         self.cur.execute(
                                             "insert into {} ({}) VALUES{}".format(self.dbTable, col, val_s))
                                         self.conn.commit()
-                                        print('Derby_data saving to sql .........')
+                                        self.logger.info('Derby_data saving to sql .........')
                 else:
                     if msg_print == True:
                         description = message.get("descr", "")
                         from_berth = message.get("from", "")
                         to_berth = message.get("to", "")
-                        print("{} [{}] {} {} {} -> {}".format(
+                        self.logger.info("{} [{}] {} {} {} -> {}".format(
                             uk_datetime.strftime("%Y-%m-%d %H:%M:%S"),
                             message_type, area_id, description, from_berth, to_berth, ))
                     self.conn.rollback()
@@ -378,8 +380,9 @@ class TD_msg(msg_to_sql):
 
 class TM_MVT_msg(msg_to_sql):
     def __init__(self, schema_name, data_type, database_name, sql_username, sql_password, sql_host, port, table_format,
-                 MVT_type):
+                 MVT_type, output_writer=None):  # ✅ 增加 output_writer
         self.MVT_type = MVT_type
+        self.logger = output_writer or logging.getLogger("AppLogger")  # ✅ 添加 logger
         super().__init__(schema_name, data_type, database_name, sql_username, sql_password, sql_host, port,
                          table_format)
 
@@ -393,7 +396,7 @@ class TM_MVT_msg(msg_to_sql):
                 val = ()
                 for values in body.values():
                     val = val + (str(values),)
-                print(val)
+                self.logger.info(val)
 
     def insert_MVT_data(self, data):
         head = list(data.values())[0]
@@ -418,7 +421,9 @@ class TM_MVT_msg(msg_to_sql):
 
 
 class VSTP_msg(msg_to_sql):
-    def __init__(self, schema_name, data_type, database_name, sql_username, sql_password, sql_host, port, table_format):
+    def __init__(self, schema_name, data_type, database_name, sql_username, sql_password, sql_host, port, table_format,
+                 output_writer=None):  # ✅ 增加 output_writer
+        self.logger = output_writer or logging.getLogger("AppLogger")  # ✅ 添加 logger
         super().__init__(schema_name, data_type, database_name, sql_username, sql_password, sql_host, port,
                          table_format)
 
@@ -432,7 +437,7 @@ class VSTP_msg(msg_to_sql):
         for i in col:
             val.append(msg[list(msg.keys())[0]]['schedule'][i])
         val.append(msg_timestamp)
-        print(val)
+        self.logger.info(val)
 
     def insert_VSTP_frame(self, parsed_body):
         self.creat_table()
@@ -455,8 +460,9 @@ class VSTP_msg(msg_to_sql):
 
 class RTPPM_msg(msg_to_sql):
     def __init__(self, schema_name, data_type, database_name, sql_username, sql_password, sql_host, port, table_format,
-                 rtppm_list):
+                 rtppm_list, output_writer=None):  # ✅ 增加 output_writer
         self.rtppm_list = rtppm_list
+        self.logger = output_writer or logging.getLogger("AppLogger")  # ✅ 添加 logger
         super().__init__(schema_name, data_type, database_name, sql_username, sql_password, sql_host, port,
                          table_format)
 
@@ -464,19 +470,19 @@ class RTPPM_msg(msg_to_sql):
         if 'OperatorPage' in self.rtppm_list:
             for i in parsed_body['RTPPMDataMsgV1']['RTPPMData']['OperatorPage']:
                 items = self.dic_flatten(i['Operator'])
-                print(items)
+                self.logger.info(items)
         if 'OOCPage' in self.rtppm_list:
             for i in parsed_body['RTPPMDataMsgV1']['RTPPMData']['OOCPage']['Operator']:
                 items = self.dic_flatten(i)
-                print(items)
+                self.logger.info(items)
         if 'NationalPage_Sector' in self.rtppm_list:
             for i in parsed_body['RTPPMDataMsgV1']['RTPPMData']['NationalPage']['Sector']:
                 items = self.dic_flatten(i)
-                print(items)
+                self.logger.info(items)
         if 'NationalPage_Operator' in self.rtppm_list:
             for i in parsed_body['RTPPMDataMsgV1']['RTPPMData']['NationalPage']['Operator']:
                 items = self.dic_flatten(i)
-                print(items)
+                self.logger.info(items)
 
     def insert_RTPPM_frame(self, parsed_body):
         uk_datetime = self.set_timestamp(int(parsed_body['RTPPMDataMsgV1']['timestamp']))

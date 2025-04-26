@@ -4,7 +4,8 @@ from MSG import *
 
 Email='925884246@qq.com'
 password = 'Esperando-0259'
-feeds_list=['TD','MVT','VSTP','RTPPM']
+# feeds_list=['TD','MVT','VSTP','RTPPM']
+feeds_list=['MVT']
 td_list=['All area','Derby']
 rtppm_list = ['NationalPage_Sector','NationalPage_Operator','OOCPage','OperatorPage']
 mvt_list = ['"0001": "activation"',
@@ -22,7 +23,7 @@ get_options={'Save_to_SQL': True, 'View': True, 'Durable': False}
 sql_info = {
     'sql_username' : 'postgres', #postgres
     'sql_password' : '1997513nihao', #1997513nihao
-    'schema_name' : 'test3',
+    'schema_name' : 'test4',
     'database_name' : 'postgres',
     'sql_host' : 'localhost',
     'port' : '5432'

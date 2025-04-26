@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>601</width>
-    <height>434</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,15 +16,22 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>360</y>
-     <width>256</width>
-     <height>46</height>
+     <x>40</x>
+     <y>480</y>
+     <width>361</width>
+     <height>51</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label_2">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
       <property name="text">
        <string>Options：</string>
       </property>
@@ -34,6 +41,13 @@
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QCheckBox" name="checkBox_3">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="text">
          <string>Save to SQL</string>
         </property>
@@ -41,6 +55,13 @@
       </item>
       <item>
        <widget class="QCheckBox" name="checkBox_4">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="text">
          <string>View</string>
         </property>
@@ -48,6 +69,13 @@
       </item>
       <item>
        <widget class="QCheckBox" name="checkBox_5">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="text">
          <string>Durable</string>
         </property>
@@ -60,11 +88,18 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>30</y>
-     <width>256</width>
-     <height>16</height>
+     <x>20</x>
+     <y>10</y>
+     <width>251</width>
+     <height>41</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="text">
     <string>Select the data to be received ：</string>
@@ -73,9 +108,9 @@
   <widget class="Line" name="line">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>30</y>
-     <width>81</width>
+     <x>20</x>
+     <y>50</y>
+     <width>411</width>
      <height>20</height>
     </rect>
    </property>
@@ -86,10 +121,10 @@
   <widget class="Line" name="line_2">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>40</y>
+     <x>420</x>
+     <y>60</y>
      <width>20</width>
-     <height>281</height>
+     <height>401</height>
     </rect>
    </property>
    <property name="orientation">
@@ -100,9 +135,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>40</y>
+     <y>60</y>
      <width>20</width>
-     <height>281</height>
+     <height>401</height>
     </rect>
    </property>
    <property name="orientation">
@@ -113,8 +148,8 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>310</y>
-     <width>281</width>
+     <y>450</y>
+     <width>411</width>
      <height>20</height>
     </rect>
    </property>
@@ -126,180 +161,23 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>60</y>
-     <width>258</width>
-     <height>246</height>
+     <y>70</y>
+     <width>391</width>
+     <height>381</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_2">
-    <item>
-     <widget class="QTreeWidget" name="treeWidget">
-      <column>
-       <property name="text">
-        <string>Network Rail Open Data Feeds</string>
-       </property>
-      </column>
-      <item>
-       <property name="text">
-        <string>TD</string>
-       </property>
-       <property name="checkState">
-        <enum>Unchecked</enum>
-       </property>
-       <property name="flags">
-        <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled|ItemIsAutoTristate</set>
-       </property>
-       <item>
-        <property name="text">
-         <string>All area</string>
-        </property>
-        <property name="checkState">
-         <enum>Unchecked</enum>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Derby</string>
-        </property>
-        <property name="checkState">
-         <enum>Unchecked</enum>
-        </property>
-       </item>
-      </item>
-      <item>
-       <property name="text">
-        <string>Train Movement</string>
-       </property>
-       <property name="checkState">
-        <enum>Unchecked</enum>
-       </property>
-       <property name="flags">
-        <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled|ItemIsAutoTristate</set>
-       </property>
-       <item>
-        <property name="text">
-         <string>&quot;0001&quot;: &quot;activation&quot;</string>
-        </property>
-        <property name="checkState">
-         <enum>Unchecked</enum>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>&quot;0002&quot;: &quot;cancellation&quot;</string>
-        </property>
-        <property name="checkState">
-         <enum>Unchecked</enum>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>&quot;0003&quot;: &quot;movement&quot;</string>
-        </property>
-        <property name="checkState">
-         <enum>Unchecked</enum>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>&quot;0004&quot;: &quot;_unidentified&quot;</string>
-        </property>
-        <property name="checkState">
-         <enum>Unchecked</enum>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>&quot;0005&quot;: &quot;reinstatement&quot;</string>
-        </property>
-        <property name="checkState">
-         <enum>Unchecked</enum>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>&quot;0006&quot;: &quot;origin change&quot;</string>
-        </property>
-        <property name="checkState">
-         <enum>Unchecked</enum>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>&quot;0007&quot;: &quot;identity change&quot;</string>
-        </property>
-        <property name="checkState">
-         <enum>Unchecked</enum>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>&quot;0008&quot;: &quot;_location change&quot;</string>
-        </property>
-        <property name="checkState">
-         <enum>Unchecked</enum>
-        </property>
-       </item>
-      </item>
-      <item>
-       <property name="text">
-        <string>VSTP</string>
-       </property>
-       <property name="checkState">
-        <enum>Unchecked</enum>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>RTPPM</string>
-       </property>
-       <property name="checkState">
-        <enum>Unchecked</enum>
-       </property>
-       <item>
-        <property name="text">
-         <string>NationalPage_Sector</string>
-        </property>
-        <property name="checkState">
-         <enum>Unchecked</enum>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>NationalPage_Operator</string>
-        </property>
-        <property name="checkState">
-         <enum>Unchecked</enum>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>OOCPage</string>
-        </property>
-        <property name="checkState">
-         <enum>Unchecked</enum>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>OperatorPage</string>
-        </property>
-        <property name="checkState">
-         <enum>Unchecked</enum>
-        </property>
-       </item>
-      </item>
-     </widget>
-    </item>
-   </layout>
+   <layout class="QVBoxLayout" name="verticalLayout_2"/>
   </widget>
   <widget class="Line" name="line_3">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>0</y>
+     <x>450</x>
+     <y>10</y>
      <width>20</width>
-     <height>441</height>
+     <height>601</height>
     </rect>
    </property>
    <property name="orientation">
@@ -309,28 +187,48 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>30</y>
-     <width>121</width>
-     <height>16</height>
+     <x>470</x>
+     <y>20</y>
+     <width>221</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="text">
     <string>Set SQL infomation:</string>
    </property>
   </widget>
   <widget class="QWidget" name="layoutWidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>380</y>
-     <width>191</width>
-     <height>26</height>
+     <x>520</x>
+     <y>510</y>
+     <width>231</width>
+     <height>31</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <widget class="QPushButton" name="pushButton">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
       <property name="text">
        <string>Start</string>
       </property>
@@ -338,8 +236,18 @@
     </item>
     <item>
      <widget class="QPushButton" name="pushButton_2">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
       <property name="text">
-       <string>Stop</string>
+       <string>Log out</string>
       </property>
      </widget>
     </item>
@@ -348,25 +256,46 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>480</x>
      <y>60</y>
-     <width>241</width>
-     <height>284</height>
+     <width>291</width>
+     <height>401</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_3">
     <item>
      <widget class="QLabel" name="label_4">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
       <property name="text">
        <string>sql_username:</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit"/>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>19</height>
+       </size>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_5">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
       <property name="text">
        <string>sql_password:</string>
       </property>
@@ -381,6 +310,13 @@
     </item>
     <item>
      <widget class="QLabel" name="label_7">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
       <property name="text">
        <string>schema_name:</string>
       </property>
@@ -391,6 +327,13 @@
     </item>
     <item>
      <widget class="QLabel" name="label_8">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
       <property name="text">
        <string>database_name:</string>
       </property>
@@ -401,8 +344,15 @@
     </item>
     <item>
      <widget class="QLabel" name="label_9">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
       <property name="text">
-       <string>sql_host</string>
+       <string>sql_host：</string>
       </property>
      </widget>
     </item>
@@ -411,6 +361,13 @@
     </item>
     <item>
      <widget class="QLabel" name="label_6">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
       <property name="text">
        <string>port:</string>
       </property>
@@ -424,6 +381,171 @@
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QTreeWidget" name="treeWidget">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>70</y>
+     <width>391</width>
+     <height>381</height>
+    </rect>
+   </property>
+   <column>
+    <property name="text">
+     <string>Network Rail Open Data Feeds</string>
+    </property>
+   </column>
+   <item>
+    <property name="text">
+     <string>TD</string>
+    </property>
+    <property name="checkState">
+     <enum>Unchecked</enum>
+    </property>
+    <property name="flags">
+     <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled|ItemIsTristate</set>
+    </property>
+    <item>
+     <property name="text">
+      <string>All area</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Derby</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+   </item>
+   <item>
+    <property name="text">
+     <string>Train Movement</string>
+    </property>
+    <property name="checkState">
+     <enum>Unchecked</enum>
+    </property>
+    <property name="flags">
+     <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled|ItemIsTristate</set>
+    </property>
+    <item>
+     <property name="text">
+      <string>&quot;0001&quot;: &quot;activation&quot;</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>&quot;0002&quot;: &quot;cancellation&quot;</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>&quot;0003&quot;: &quot;movement&quot;</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>&quot;0004&quot;: &quot;_unidentified&quot;</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>&quot;0005&quot;: &quot;reinstatement&quot;</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>&quot;0006&quot;: &quot;origin change&quot;</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>&quot;0007&quot;: &quot;identity change&quot;</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>&quot;0008&quot;: &quot;_location change&quot;</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+   </item>
+   <item>
+    <property name="text">
+     <string>VSTP</string>
+    </property>
+    <property name="checkState">
+     <enum>Unchecked</enum>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>RTPPM</string>
+    </property>
+    <property name="checkState">
+     <enum>Unchecked</enum>
+    </property>
+    <item>
+     <property name="text">
+      <string>NationalPage_Sector</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>NationalPage_Operator</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>OOCPage</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>OperatorPage</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+   </item>
   </widget>
  </widget>
  <resources/>
